@@ -19,8 +19,15 @@ export default new Vuex.Store({
     GET_MONTHLY_DATA(state, payload) {
       state.stockData = payload
     },
+    SET_AUTH_TYPE(state, payload) {
+      state.authType = payload
+    },
   },
   actions: {
+    setAuthType(context, authType) {
+      context.commit('SET_AUTH_TYPE', authType)
+    },
+
     async getDailyData({ commit }) {
       const response = await axios.get(
         'https://alpha-vantage.p.rapidapi.com/query',
