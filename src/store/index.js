@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     stockData: null,
+    authType: 'Admin',
   },
   mutations: {
     GET_DAILY_DATA(state, payload) {

@@ -19,9 +19,10 @@
     <div>
       <v-select
         light
-        v-model="mod"
+        :value="authType"
         class="mt-8 user-select"
         :items="['Admin', 'User']"
+        v-on:change="setAuthType"
         label="Admin"
         solo
       ></v-select>
@@ -41,6 +42,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'Header',
   data() {
@@ -51,9 +53,13 @@ export default {
       timeout: 2000,
     }
   },
+  computed: {
+    ...mapState(['authType']),
+  },
   methods: {
+    ...mapActions(['setAuthType']),
     goToLogs() {
-      if (this.mod !== 'Admin') {
+      if (this.authType !== 'Admin') {
         this.snackbar = true
         return
       }
