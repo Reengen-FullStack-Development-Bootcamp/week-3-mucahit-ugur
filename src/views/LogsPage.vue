@@ -18,6 +18,18 @@
         </v-treeview>
       </v-col>
     </v-row>
+    <!-- if no logs, don't display btn -->
+    <v-row v-if="this.logs.length > 0">
+      <!-- remove logs btn -->
+      <v-btn color="amber" class="ml-10" @click="removeLogs"
+        >Remove all logs</v-btn
+      >
+    </v-row>
+
+    <!-- if no history available, show info message -->
+    <v-row v-if="this.logs.length === 0">
+      <v-col class="ml-10">No history available! </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -60,6 +72,13 @@ export default {
           unauthorized: log.unauthorized,
         }
       })
+    },
+  },
+  methods: {
+    // remove all logs from local storage
+    removeLogs() {
+      localStorage.removeItem('localLogs')
+      this.logs = []
     },
   },
 }
