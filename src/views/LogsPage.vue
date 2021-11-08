@@ -4,7 +4,18 @@
     <v-row>
       <v-col>
         <!-- logs display in treeview -->
-        <v-treeview dense hoverable :items="items"> </v-treeview>
+        <v-treeview dense hoverable :items="items">
+          <!-- if unauthorized, display title in red color -->
+          <template v-slot:label="{ item }">
+            <span
+              :class="{
+                'error-message': item.unauthorized,
+              }"
+            >
+              {{ item.name }}
+            </span>
+          </template>
+        </v-treeview>
       </v-col>
     </v-row>
   </div>
@@ -41,7 +52,12 @@ export default {
           children: [
             { id: log.date + 'child1', name: 'from: ' + log.from },
             { id: log.date + 'child2', name: 'to: ' + log.to },
+            {
+              id: log.date + 'child3',
+              name: 'Auth Error: ' + log.unauthorized,
+            },
           ],
+          unauthorized: log.unauthorized,
         }
       })
     },
@@ -49,4 +65,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.error-message {
+  color: red;
+}
+</style>
