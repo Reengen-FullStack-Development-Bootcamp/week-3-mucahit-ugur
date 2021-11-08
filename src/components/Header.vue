@@ -78,6 +78,16 @@ export default {
       })
     },
   },
+  // redirects home page if auth type is not Admin
+  updated() {
+    if (this.authType !== 'Admin') {
+      this.$router.replace({ name: 'Home' }).catch((error) => {
+        if (error.name != 'NavigationDuplicated') {
+          throw error
+        }
+      })
+    }
+  },
 }
 </script>
 
