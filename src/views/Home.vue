@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="ma-5" align="center">
-      <v-form class="search-form" @submit.prevent="searchSymbol">
+      <v-form class="search-form" @submit.prevent="searchCompany">
         <v-text-field
           v-model="search"
           label="Company Name"
@@ -11,10 +11,12 @@
         <v-btn type="submit">Search</v-btn>
       </v-form>
     </div>
+    <div>{{ symbols }}</div>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Home',
   data() {
@@ -22,9 +24,13 @@ export default {
       search: null,
     }
   },
+  computed: {
+    ...mapState(['symbols']),
+  },
   methods: {
-    searchSymbol() {
-      console.log('submitted')
+    ...mapActions(['searchSymbols']),
+    searchCompany() {
+      this.searchSymbols(this.search)
     },
   },
 }
