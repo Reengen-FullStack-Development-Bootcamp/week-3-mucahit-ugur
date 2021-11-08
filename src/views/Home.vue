@@ -1,15 +1,44 @@
 <template>
-  <hello-world />
+  <div>
+    <div class="ma-5" align="center">
+      <v-form class="search-form" @submit.prevent="searchSymbol">
+        <v-text-field
+          v-model="search"
+          label="Company Name"
+          clearable
+          class="search-input"
+        ></v-text-field>
+        <v-btn type="submit">Search</v-btn>
+      </v-form>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld";
-
 export default {
-  name: "Home",
-
-  components: {
-    HelloWorld,
+  name: 'Home',
+  data() {
+    return {
+      search: null,
+    }
   },
-};
+  methods: {
+    searchSymbol() {
+      console.log('submitted')
+    },
+  },
+}
 </script>
+
+<style>
+.search-form {
+  max-width: 700px;
+  display: flex;
+  align-items: center;
+  padding: 20px 40px;
+}
+
+.search-input {
+  margin-right: 10px;
+}
+</style>
