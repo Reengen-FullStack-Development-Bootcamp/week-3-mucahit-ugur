@@ -6,10 +6,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    stockData: null,
+    stockData: [],
     authType: 'Admin',
     symbols: [],
-    selectedSymbol: '',
   },
   mutations: {
     GET_DAILY_DATA(state, payload) {
@@ -33,14 +32,14 @@ export default new Vuex.Store({
       context.commit('SET_AUTH_TYPE', authType)
     },
 
-    async getDailyData({ commit }) {
+    async getDailyData(context, symbol) {
       const response = await axios.get(
         'https://alpha-vantage.p.rapidapi.com/query',
         {
           method: 'GET',
           params: {
             function: 'TIME_SERIES_DAILY',
-            symbol: 'MSFT',
+            symbol,
             outputsize: 'compact',
             datatype: 'json',
           },
@@ -58,16 +57,16 @@ export default new Vuex.Store({
         return { title: item, ...results[item] }
       })
 
-      commit('GET_DAILY_DATA', arrWithDate)
+      context.commit('GET_DAILY_DATA', arrWithDate)
     },
 
-    getWeeklyData({ commit }) {
+    getWeeklyData(context, symbol) {
       axios
         .get('https://alpha-vantage.p.rapidapi.com/query', {
           method: 'GET',
           params: {
             function: 'TIME_SERIES_WEEKLY',
-            symbol: 'MSFT',
+            symbol,
             outputsize: 'compact',
             datatype: 'json',
           },
@@ -85,19 +84,19 @@ export default new Vuex.Store({
             return { title: item, ...results[item] }
           })
 
-          commit('GET_WEEKLY_DATA', arrWithDate)
+          context.commit('GET_WEEKLY_DATA', arrWithDate)
         })
         .catch((error) => console.log(error.message))
     },
 
-    async getMonthlyData({ commit }) {
+    async getMonthlyData(context, symbol) {
       const response = await axios.get(
         'https://alpha-vantage.p.rapidapi.com/query',
         {
           method: 'GET',
           params: {
             function: 'TIME_SERIES_MONTHLY',
-            symbol: 'MSFT',
+            symbol,
             outputsize: 'compact',
             datatype: 'json',
           },
@@ -116,7 +115,7 @@ export default new Vuex.Store({
         return { title: item, ...results[item] }
       })
 
-      commit('GET_MONTHLY_DATA', arrWithDate)
+      context.commit('GET_MONTHLY_DATA', arrWithDate)
     },
     async searchSymbols(context, keyword) {
       const response = await axios.get(
