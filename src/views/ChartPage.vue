@@ -65,6 +65,9 @@ export default {
     },
     // retrieve candlestick graph
     retrieveGraph(data) {
+      // delete previous graph before append new graph
+      d3.select(this.$refs.candleStick).html('')
+
       const width = 960
       const height = 500
       const margin = 60
