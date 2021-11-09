@@ -13,7 +13,7 @@
         <v-btn type="submit">Search</v-btn>
       </v-form>
       <!-- found companies in alpha vantage api -->
-      <v-col class="company-list" v-if="symbols.length > 0">
+      <v-col class="company-list" v-if="symbols.length > 0 && showList">
         <v-list two-line subheader dense>
           <v-subheader>Select a company to view stock data</v-subheader>
           <v-list-item
@@ -41,6 +41,7 @@ export default {
   data() {
     return {
       search: '',
+      showList: false,
     }
   },
   computed: {
@@ -50,6 +51,7 @@ export default {
     ...mapActions(['searchSymbols', 'getDailyData']),
     searchCompany() {
       this.searchSymbols(this.search)
+      this.showList = true
     },
     // route to chart display page
     goToChartPage(company) {
@@ -61,6 +63,10 @@ export default {
         query: { company: company['2. name'] },
       })
     },
+  },
+  beforeDestroy() {
+    console.log('hi')
+    this.showList = false
   },
 }
 </script>
