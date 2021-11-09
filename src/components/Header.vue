@@ -64,7 +64,7 @@ export default {
         return
       }
 
-      this.$router.push({ path: 'logs' }).catch((error) => {
+      this.$router.push({ path: '/logs' }).catch((error) => {
         if (error.name != 'NavigationDuplicated') {
           throw error
         }
